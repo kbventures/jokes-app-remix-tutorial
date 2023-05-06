@@ -3,9 +3,7 @@ import {
   Links,
   LiveReload,
   Outlet,
-  useRouteError,
 } from "@remix-run/react";
-import type { PropsWithChildren } from "react";
 
 import globalLargeStylesUrl from "~/styles/global-large.css";
 import globalMediumStylesUrl from "~/styles/global-medium.css";
@@ -25,10 +23,7 @@ export const links: LinksFunction = () => [
   },
 ];
 
-function Document({
-  children,
-  title = "Remix: So great, it's funny!",
-}: PropsWithChildren<{ title?: string }>) {
+export default function App() {
   return (
     <html lang="en">
       <head>
@@ -37,41 +32,13 @@ function Document({
           name="viewport"
           content="width=device-width,initial-scale=1"
         />
-        <title>{title}</title>
+        <title>Remix: So great, it's funny!</title>
         <Links />
       </head>
       <body>
-        {children}
+        <Outlet />
         <LiveReload />
       </body>
     </html>
   );
 }
-
-export default function App() {
-  return (
-    <Document>
-      <Outlet />
-    </Document>
-  );
-}
-
-
-
-export function ErrorBoundary() {
-  const error = useRouteError();
-
-  const errorMessage =
-    error instanceof Error
-      ? error.message
-      : "Unknown error";
-  return (
-    <Document title="Uh-oh!">
-      <div className="error-container">
-        <h1>App Error</h1>
-        <pre>{errorMessage}</pre>
-      </div>
-    </Document>
-  );
-}
-
